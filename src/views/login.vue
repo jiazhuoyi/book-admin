@@ -88,19 +88,14 @@ export default {
         try {
           if (valid) {
             const result = await this.$store.dispatch('login', this.loginForm);
-            console.log('result:', result);
             if (result.token) {
               this.$message({
                 message: '登录成功',
                 type: 'success'
               });
-              console.log('--1----');
               // const user = await this.$store.dispatch('getUserInfo', result.account);
-              console.log('--2----');
               const ref = this.$route.query.redirect;
-              console.log('--3----');
               const jumpPage = (!ref || ref === '/login') ? '/' : ref;
-              console.log('-------jumpPage:', jumpPage);
               // const userInfo = user.userInfo;
               // userInfo.token = result.token;
               // this.$store.commit('setUser', user.userInfo);

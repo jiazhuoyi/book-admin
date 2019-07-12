@@ -8,7 +8,7 @@
           </div>
           <div class="content">
             <div class="welcome">中午好, {{$store.state.user.name}}</div>
-            <div class="role">root用户 | 所有权限</div>
+            <div class="role">管理员 | 系统权限</div>
             <div class="last-login">上次登录时间：{{$store.state.user.last_login | date}}</div>
           </div>
         </div>

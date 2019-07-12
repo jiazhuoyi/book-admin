@@ -1,86 +1,136 @@
 <template>
   <div class="user">
-    <el-tabs v-model="activeTab" type="card" :header-cell-style="{background: '#1D1F21'}">
-      <el-tab-pane name="checkingUsers">
-        <span slot="label"><i class="iconfont icon-daishenhe"></i> 待审核用户</span>
-      </el-tab-pane>
-      <el-tab-pane name="unboundUers">
-        <span slot="label"><i class="iconfont icon-weibangding"></i> 未绑定用户</span>
-        未绑定用户
-      </el-tab-pane>
-      <el-tab-pane name="ordinaryUsers">
-        <span slot="label"><i class="iconfont icon-yonghu"></i> 普通用户</span>
-        普通用户
-      </el-tab-pane>
-      <el-tab-pane name="systemUsers">
-        <span slot="label"><i class="iconfont icon-xitongyonghu"></i> 系统用户</span>
-        系统用户
-      </el-tab-pane>
-      <el-tab-pane name="allUsers">
-        <span slot="label"><i class="iconfont icon-suoyouyonghu"></i> 所有用户</span>
-        所有用户
+    <div class="header">
+      <div class="search">
+        用户名：
+        <el-input placeholder="请输入用户名"  style="width: 300px;" v-model="serachName"></el-input>
+        <el-button type="primary" style="margin-left: 15px;" icon="el-icon-search">查询</el-button>
+      </div>
+      <div class="operation">
+        <el-button icon="el-icon-refresh" :loading="loading" circle @click="refresh"></el-button>
+        <el-button type="success" @click="addSystemUser">新增用户</el-button>
+        <el-button>导出Excel</el-button>
+      </div>
+    </div>
+    <el-tabs v-model="activeTab" @tab-click="handleClick" type="border-card" v-loading="loading">
+      <el-tab-pane v-for="tab in userTabs" :key="tab.value" :name="tab.value">
+        <span slot="label">
+          <i :class="`iconfont icon-${tab.icon}`"></i>{{tab.label}}
+        </span>
+        <user-table v-if="activeTab === tab.value" :users="users"></user-table>
       </el-tab-pane>
     </el-tabs>
-    <el-table :data="users">
-      <el-table-column type="index" label="序号" width="50"></el-table-column>
-      <el-table-column label="头像" align="center">
-        <template slot-scope="scope">
-          <el-avatar :src="scope.row.avatarUrl"> user </el-avatar>
-        </template>
-      </el-table-column>
-      <el-table-column prop="nickName" label="微信昵称"></el-table-column>
-      <el-table-column prop="name" label="姓名"></el-table-column>
-      <el-table-column prop="emid" label="员工编号"></el-table-column>
-      <el-table-column label="状态" width="150">
-        <template slot-scope="scope">
-          <el-tag v-show="scope.row.status == 0" type="warning">未绑定</el-tag>
-          <el-tag v-show="scope.row.status == 1">待审核</el-tag>
-          <el-tag v-show="scope.row.status == 2" type="success">有效</el-tag>
-          <el-tag v-show="scope.row.status == 6" type="danger">被驳回</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="申请时间" width="200" align="left">
-        <template slot-scope="scope">
-          <span>{{ scope.row.createAt | date }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="200">
-        <template slot-scope="scope">
-          <el-button type="success" size="mini">通过</el-button>
-          <el-button type="danger" size="mini">驳回</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
     <div class="page-wrapper">
       <el-pagination
-        :current-page="1"
-        :page-size="10"
+        :current-page.sync="currentPage"
+        :page-size="limit"
         background
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="4000">
+        @current-change="handlePaginationClick"
+        layout="total, prev, pager, next, jumper"
+        :total="total">
       </el-pagination>
     </div>
+    <el-dialog title="新增系统用户" :visible.sync="showDialog" width="30%">
+      <el-form ref="userForm" :model="userForm">
+        <el-form-item label="账号">
+          <el-input
+            placeholder="请输入账号"
+            style="width: 400px;"
+            v-model="userForm.account">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input
+            placeholder="请输入密码"
+            style="width: 500px;"
+            v-model="userForm.firstPassword"
+            show-password>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="确认密码">
+          <el-input
+            placeholder="请再次输入密码"
+            style="width: 400px;"
+            v-model="userForm.secondPassword"
+            show-password>
+          </el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="showDialog = false">确 定</el-button>
+        <el-button @click="showDialog = false">取 消</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import { getUsers } from '@/api/user';
+import userTable from './user-table';
 
 export default {
+  components: {
+    userTable
+  },
   data() {
     return {
       activeTab: 'checkingUsers',
-      users: []
+      userTabs: [
+        { label: '待处理用户', value: 'checkingUsers', icon: 'daishenhe' },
+        { label: '未绑定用户', value: 'unboundUers', icon: 'weibangding' },
+        { label: '普通用户', value: 'ordinaryUsers', icon: 'yonghu' },
+        { label: '系统用户', value: 'systemUsers', icon: 'xitongyonghu' },
+        { label: '所有用户', value: 'allUsers', icon: 'suoyouyonghu'}
+      ],
+      users: [],
+      start: 0,
+      limit: 3,
+      total: 0,
+      currentPage: 1,
+      serachName: '',
+      loading: false,
+      showDialog: false,
+      userForm: {}
     };
   },
   async mounted() {
-    this.users = (await getUsers('all', 0, 100)).users;
+    this.users = await this.getSomeUsers(this.activeTab, 0, this.limit);
+  },
+  methods: {
+    addSystemUser() {
+      this.showDialog = true;
+    },
+    async getSomeUsers(type, start, limit) {
+      this.loading = true;
+      const result = await getUsers(this.activeTab, start, limit);
+      this.total = result.total;
+      this.loading = false;
+      return result.users;
+    },
+    async handleClick() {
+      this.users = await this.getSomeUsers(this.activeTab, 0, this.limit);
+    },
+    async refresh() {
+      this.users = await this.getSomeUsers(this.activeTab, 0, this.limit);
+    },
+    async handlePaginationClick() {
+      this.users = await this.getSomeUsers(
+        this.activeTab, 
+        (this.currentPage - 1) * this.limit,
+        this.limit);
+    }
   }
 };
 </script>
 
 <style lang="stylus" scoped>
 .user
+  text-align: left
+  .header
+    display: flex
+    justify-content: space-between
+    padding: 15px 0 30px 0
   .page-wrapper
     padding: 15px 0
     display: flex

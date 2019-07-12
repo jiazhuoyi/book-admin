@@ -87,7 +87,7 @@ const router = new Router({
       path: '/user',
       meta: {
         requireAuth: true,
-        icon: 'icon-suoyouyonghu1',
+        icon: 'icon-yonghuzu',
         title: '用户管理'
       },
       component: Main,
@@ -106,7 +106,7 @@ const router = new Router({
       path: '/system',
       meta: {
         requireAuth: true,
-        icon: 'icon-xitong',
+        icon: 'icon-shezhi',
         title: '系统设置'
       },
       component: Main,

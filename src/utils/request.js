@@ -39,6 +39,9 @@ request.interceptors.response.use((response) => {
     case 404:
       Vue.prototype.$message.error('接口错误');
       break;
+    case 401:
+      router.push({ path: '/login', query: { redirect: window.location.pathname } });
+      break;
     default:
       break;
   }
