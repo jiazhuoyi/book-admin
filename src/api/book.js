@@ -23,3 +23,27 @@ export function updateNotices(obj) {
     }
   });
 }
+
+export function submitISBN(data) {
+  return request({
+    url: '/manage/isbn',
+    method: 'post',
+    data
+  });
+}
+
+export function submitBook(data) {
+  return request({
+    url: '/manage/book',
+    method: 'post',
+    data
+  });
+}
+
+export function updateBookAmount(data) {
+  return request({
+    url: '/manage/book/amount',
+    method: 'put',
+    data
+  });
+}

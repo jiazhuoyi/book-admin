@@ -7,7 +7,7 @@
 </template>
 
 <script>
-// import echarts from '@/utils/echarts';
+import echarts from 'echarts';
 
 export default {
   mounted() {

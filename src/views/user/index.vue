@@ -9,7 +9,7 @@
       <div class="operation">
         <el-button icon="el-icon-refresh" :loading="loading" circle @click="refresh"></el-button>
         <el-button type="success" @click="addSystemUser">新增用户</el-button>
-        <el-button>导出Excel</el-button>
+        <el-button disabled>导出Excel</el-button>
       </div>
     </div>
     <el-tabs v-model="activeTab" @tab-click="handleClick" type="border-card" v-loading="loading">
@@ -30,19 +30,23 @@
         :total="total">
       </el-pagination>
     </div>
-    <el-dialog title="新增系统用户" :visible.sync="showDialog" width="30%">
-      <el-form ref="userForm" :model="userForm">
+    <el-dialog title="新增系统用户" :visible.sync="showDialog" width="25%">
+      <el-form ref="userForm" label-width="80px" :model="userForm">
         <el-form-item label="账号">
           <el-input
             placeholder="请输入账号"
-            style="width: 400px;"
             v-model="userForm.account">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="姓名">
+          <el-input
+            placeholder="请输入姓名"
+            v-model="userForm.name">
           </el-input>
         </el-form-item>
         <el-form-item label="密码">
           <el-input
             placeholder="请输入密码"
-            style="width: 500px;"
             v-model="userForm.firstPassword"
             show-password>
           </el-input>
@@ -50,9 +54,14 @@
         <el-form-item label="确认密码">
           <el-input
             placeholder="请再次输入密码"
-            style="width: 400px;"
             v-model="userForm.secondPassword"
             show-password>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="角色">
+          <el-input
+            v-model="role"
+            :disabled="true">
           </el-input>
         </el-form-item>
       </el-form>
@@ -81,17 +90,18 @@ export default {
         { label: '未绑定用户', value: 'unboundUers', icon: 'weibangding' },
         { label: '普通用户', value: 'ordinaryUsers', icon: 'yonghu' },
         { label: '系统用户', value: 'systemUsers', icon: 'xitongyonghu' },
-        { label: '所有用户', value: 'allUsers', icon: 'suoyouyonghu'}
+        { label: '所有用户', value: 'allUsers', icon: 'suoyouyonghu' }
       ],
       users: [],
       start: 0,
-      limit: 3,
+      limit: 8,
       total: 0,
       currentPage: 1,
       serachName: '',
       loading: false,
       showDialog: false,
-      userForm: {}
+      userForm: {},
+      role: '系统用户'
     };
   },
   async mounted() {
@@ -116,7 +126,7 @@ export default {
     },
     async handlePaginationClick() {
       this.users = await this.getSomeUsers(
-        this.activeTab, 
+        this.activeTab,
         (this.currentPage - 1) * this.limit,
         this.limit);
     }

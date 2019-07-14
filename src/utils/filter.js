@@ -28,4 +28,11 @@ export default function (Vue) {
     const seconds = fillZero(date.getSeconds());
     return value ? `${year}-${month}-${day} ${hour}:${minutes}:${seconds}` : '';
   });
+  Vue.filter('role', (value) => {
+    const roleMap = {
+      manager: '系统用户',
+      consumer: '普通用户'
+    };
+    return roleMap[value];
+  });
 }

@@ -41,8 +41,11 @@
             </el-button>
           </el-form-item>
         </el-form>
-        <div class="other">
+        <!-- <div class="other">
           <router-link to="/signup">注册账户</router-link>
+        </div> -->
+        <div class="other">
+          <router-link to="/signup">忘记密码</router-link>
         </div>
       </el-card>
     </div>

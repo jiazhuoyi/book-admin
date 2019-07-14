@@ -80,6 +80,14 @@ const router = new Router({
             requireAuth: true
           },
           component: () => import('@/views/book/index')
+        },
+        {
+          path: 'add',
+          name: 'AddBook',
+          meta: {
+            requireAuth: true
+          },
+          component: () => import('@/views/book/add-book')
         }
       ]
     },
@@ -137,6 +145,35 @@ const router = new Router({
             requireAuth: true
           },
           component: Notice
+        }
+      ]
+    },
+    {
+      path: '/other',
+      meta: {
+        requireAuth: true,
+        icon: 'icon-daishenhe',
+        title: '其他'
+      },
+      component: Main,
+      children: [
+        {
+          path: 'apply',
+          name: 'Apply',
+          meta: {
+            title: '购书申请',
+            requireAuth: true
+          },
+          component: () => import('@/views/other/apply')
+        },
+        {
+          path: 'suggestion',
+          name: 'Suggestion',
+          meta: {
+            title: '投诉建议',
+            requireAuth: true
+          },
+          component: () => import('@/views/other/suggestion')
         }
       ]
     },

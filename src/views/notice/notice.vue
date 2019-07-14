@@ -94,12 +94,7 @@ export default {
       this.selected = val;
     },
     async updateNotices() {
-      const notices = [];
-      for (const selectItem of this.selected) {
-        if (selectItem.status === 0) {
-          notices.push(selectItem._id);
-        }
-      }
+      const notices = this.selected.filter(item => item.status === 0);
       if (notices.length === 0) {
         this.$message.error('未选中未读消息');
         return;
@@ -114,10 +109,7 @@ export default {
       }
     },
     async deleteNotices() {
-      const notices = [];
-      for (const selectItem of this.selected) {
-        notices.push(selectItem._id);
-      }
+      const notices = this.selected.filter(item => item.status === 0);
       if (notices.length === 0) {
         this.$message.error('未选中未读消息');
         return;
@@ -138,7 +130,7 @@ export default {
       const result = await getNotices({ status, pageNumber, limit });
       this.notices = result.notices;
       this.totalCount = result.totalCount;
-      if (~~status !== 0) {
+      if (status) {
         const data = await getNoticeCount();
         this.$store.commit('setTotalCount', data.totalCount);
       }
