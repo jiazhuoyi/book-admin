@@ -124,7 +124,7 @@ export default {
 .login
   width: 100%
   height: 100%
-  background: url('https://cdn.jiazhuoyi.cn/login2.jpg')
+  background: url('https://cdn.jiazhuoyi.cn/book_admin.jpg')
   background-size: cover
   background-position: center
   position: relative

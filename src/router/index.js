@@ -152,7 +152,7 @@ const router = new Router({
       path: '/other',
       meta: {
         requireAuth: true,
-        icon: 'icon-daishenhe',
+        icon: 'icon-qita',
         title: '其他'
       },
       component: Main,
