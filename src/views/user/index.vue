@@ -17,7 +17,7 @@
         <span slot="label">
           <i :class="`iconfont icon-${tab.icon}`"></i>{{tab.label}}
         </span>
-        <user-table v-if="activeTab === tab.value" :users="users"></user-table>
+        <user-table @refresh="refresh" v-if="activeTab === tab.value" :users="users"></user-table>
       </el-tab-pane>
     </el-tabs>
     <div class="page-wrapper">

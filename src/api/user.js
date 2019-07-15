@@ -56,3 +56,11 @@ export function getUsers(type, start, limit) {
     }
   });
 }
+
+export function updateUser(data) {
+  return request({
+    url: '/manage/user',
+    method: 'put',
+    data
+  });
+}
