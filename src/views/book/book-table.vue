@@ -23,10 +23,14 @@
       <el-table-column prop="isbn13" label="ISBN"></el-table-column>
       <el-table-column label="状态" width="150">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status > 0" type="success" effect="dark">
+          <!-- <el-tag v-if="scope.row.status > 0" type="success" effect="dark">
             还剩{{scope.row.status}}本
           </el-tag>
-          <el-tag v-else type="danger" effect="dark">告罄</el-tag>
+          <el-tag v-else type="danger" effect="dark">告罄</el-tag> -->
+          <!-- <el-tag
+            :type="(scope.row.status | order_status).color">
+            {{(scope.row.status | order_status).label}}
+          </el-tag> -->
         </template>
       </el-table-column>
       <el-table-column label="入库时间" width="200" align="left">
@@ -36,7 +40,7 @@
       </el-table-column>
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
-          <el-button type="primary" @click="changeAmount(scope.row)">修改数量</el-button>
+          <el-button type="primary" size="mini" @click="changeAmount(scope.row)">修改数量</el-button>
         </template>
       </el-table-column>
     </el-table>

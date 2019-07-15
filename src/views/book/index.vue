@@ -15,7 +15,7 @@
       </div>
     </div>
     <el-tabs v-model="activeTab" @tab-click="handleClick" type="border-card" v-loading="loading">
-      <el-tab-pane v-for="tab in bookTabs" :key="tab.value" :name=tab.value>
+      <el-tab-pane v-for="tab in bookTabs" :key="tab.value" :name="tab.value">
         <span slot="label"><i :class="`iconfont icon-${tab.icon}`"></i> {{tab.label}}</span>
         <book-table @refresh="refresh" v-if="activeTab === tab.value" :books="books"></book-table>
       </el-tab-pane>
