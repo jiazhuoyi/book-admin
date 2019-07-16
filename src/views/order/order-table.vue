@@ -28,14 +28,15 @@
       <el-table-column prop="user.emid" label="员工编号"></el-table-column>
       <el-table-column label="状态" width="150">
         <template slot-scope="scope">
-          <!-- <el-tag v-if="scope.row.status > 0" type="success" effect="dark">
-            还剩{{scope.row.status}}本
-          </el-tag>
-          <el-tag v-else type="danger" effect="dark">告罄</el-tag> -->
           <el-tag
             :type="scope.row.status | order_color">
             {{ scope.row.status | order_label }}
           </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="订单轨迹" align="center" width="100">
+        <template slot-scope="scope">
+          <i class="el-icon-zoom-in traces-btn" @click="showTraces(scope.row)"></i>
         </template>
       </el-table-column>
       <el-table-column width="200" align="left">
@@ -50,22 +51,42 @@
         <template slot-scope="scope">
           <el-button type="success"
             size="mini"
-            v-if="scope.row.status === 0 || scope.row.status === 3">通过</el-button>
+            @click="update(scope.row._id, 'order_pass_borrow')"
+            v-if="scope.row.status === 0">通过</el-button>
+          <el-button type="success"
+            size="mini"
+            @click="update(scope.row._id, 'order_pass_return')"
+            v-if="scope.row.status === 3">通过</el-button>
           <el-button
             type="danger"
             size="mini"
+            @click="update(scope.row._id, 'order_reject')"
             v-if="scope.row.status === 0 || scope.row.status === 3">
             驳回
           </el-button>
         </template>
       </el-table-column>
     </el-table>
+    <order-traces :show="dialogVisible" @closetraces="closetraces" :traces="traces"></order-traces>
   </div>
 </template>
 
 <script>
+import { updateOrder } from '@/api/order';
+
+import orderTraces from './order-traces';
+
 export default {
   props: ['orders', 'status'],
+  components: {
+    orderTraces
+  },
+  data() {
+    return {
+      dialogVisible: false,
+      traces: []
+    };
+  },
   computed: {
     order_date_msg() {
       const ORDER_TYPE = {
@@ -76,7 +97,30 @@ export default {
       };
       return ORDER_TYPE[this.status] ? ORDER_TYPE[this.status] : '未知错误时间';
     }
+  },
+  methods: {
+    refresh() {
+      this.$emit('refresh');
+    },
+    async update(id, operation) {
+      await updateOrder({ id, operation });
+      this.refresh();
+    },
+    showTraces(order) {
+      this.traces = [];
+      Object.keys(order.traces)
+        .map(key => this.traces.push({ date: order.traces[key], content: key }));
+      this.dialogVisible = true;
+    },
+    closetraces() {
+      this.dialogVisible = false;
+    }
   }
 };
 </script>
 
+<style lang="stylus" scoped>
+.order-table
+  .traces-btn:hover
+    cursor: pointer
+</style>

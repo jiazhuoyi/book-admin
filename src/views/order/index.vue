@@ -1,28 +1,11 @@
 <template>
   <div class="order">
-    <search></search>
-    <!-- <el-tabs v-model="activeTab" type="card">
-      <el-tab-pane name="checking">
-        <span slot="label"><i class="iconfont icon-daishenhe"></i> 待审核</span>
-        待审核
-      </el-tab-pane>
-      <el-tab-pane name="borrowing">
-        <span slot="label"><i class="iconfont icon-jieshu"></i> 借书中</span>
-        借书中
-      </el-tab-pane>
-      <el-tab-pane label="已还书" name="returned">
-        <span slot="label"><i class="iconfont icon-huanshuzhong"></i> 已还书</span>
-        已还书f
-      </el-tab-pane>
-      <el-tab-pane label="已过期" name="expired">
-        <span slot="label"><i class="iconfont icon-guoqi1"></i> 已过期</span>
-        已过期
-      </el-tab-pane>
-    </el-tabs> -->
+    <search :loading="loading" @refresh="refresh"></search>
     <el-tabs
       v-model="activeTab"
       @tab-click="handleClick"
-      type="border-card">
+      type="border-card"
+      v-loading="loading">
       <el-tab-pane v-for="tab in orderTabs" :key="tab.value" :name="tab.value">
         <span slot="label"><i :class="`iconfont icon-${tab.icon}`"></i> {{tab.label}}</span>
         <order-table
@@ -33,6 +16,16 @@
         </order-table>
       </el-tab-pane>
     </el-tabs>
+    <div class="page-wrapper">
+      <el-pagination
+        :current-page.sync="currentPage"
+        :page-size="limit"
+        background
+        @current-change="handlePaginationClick"
+        layout="total, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -50,6 +43,7 @@ export default {
     return {
       activeTab: 'checkingOrders',
       orders: [],
+      loading: false,
       orderTabs: [
         { label: '待审核', value: 'checkingOrders', icon: 'daishenhe' },
         { label: '借书中', value: 'borrowingOrders', icon: 'jieshu' },
@@ -57,24 +51,42 @@ export default {
         { label: '已过期', value: 'expiredOrders', icon: 'guoqi1' }
       ],
       start: 0,
-      limit: 10
+      limit: 10,
+      currentPage: 1,
+      total: 0
     };
   },
   async mounted() {
-    this.orders = (await getOrders('checkingOrders', 0, this.limit)).orders;
+    this.orders = await this.getSomeOrders(this.activeTab, this.start, this.limit);
   },
   methods: {
     async getSomeOrders(type, start, limit) {
-      const result = await getOrders(type, 0, limit);
+      this.loading = true;
+      const result = await getOrders(type, start, limit);
       this.total = result.total;
+      this.loading = false;
       return result.orders;
     },
-    refresh() {
-      this.getSomeOrders(this.activeTab, this.start, this.limit);
+    async refresh() {
+      this.orders = await this.getSomeOrders(this.activeTab, this.start, this.limit);
     },
     async handleClick() {
       this.orders = await this.getSomeOrders(this.activeTab, 0, this.limit);
+    },
+    async handlePaginationClick() {
+      this.orders = await this.getSomeOrders(this.activeTab,
+        (this.currentPage - 1) * this.limit,
+        this.limit);
     }
   }
 };
 </script>
+
+<style lang="stylus" scoped>
+.order
+  text-align: left
+  .page-wrapper
+    padding: 15px 0
+    display: flex
+    justify-content: flex-end
+</style>

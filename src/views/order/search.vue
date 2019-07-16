@@ -8,7 +8,7 @@
       <el-button type="primary" style="margin-left: 15px;" icon="el-icon-search">查询</el-button>
     </div>
     <div class="operation">
-      <el-button icon="el-icon-refresh" circle :loading="loading"></el-button>
+      <el-button icon="el-icon-refresh" circle :loading="loading" @click="refresh"></el-button>
       <el-button disabled>导出Excel</el-button>
     </div>
   </div>
@@ -22,6 +22,11 @@ export default {
       userName: '',
       bookName: ''
     };
+  },
+  methods: {
+    refresh() {
+      this.$emit('refresh');
+    }
   }
 };
 </script>

@@ -14,7 +14,7 @@ export function getOrders(type, start, limit) {
 
 export function updateOrder(data) {
   return request({
-    url: '/manage/orders',
+    url: '/manage/order',
     method: 'put',
     data
   });

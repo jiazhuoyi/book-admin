@@ -14,13 +14,16 @@
         </div>
         <div class="system item">
           <div class="ip test">
-            <span class="title">待处理订单</span>
-            <p class="content">20条</p>
+            <p class="title">待处理订单</p>
+            <router-link class="content" to="/order">
+              <countTo :startVal='0' :endVal='20'></countTo>条
+            </router-link>
           </div>
           <div class="count test">
-            <span class="title">待处理用户</span>
-            <p class="content">
-              <countTo :startVal='0' :endVal='10'></countTo></p>
+            <p class="title">待处理用户</p>
+            <router-link class="content" to="/user">
+              <countTo :startVal='0' :endVal='10'></countTo>
+            </router-link>
           </div>
         </div>
       </div>
@@ -66,22 +69,25 @@ export default {
     .system
       text-align: right
       .test
+        display: inline-block
+        width: 25%
+        text-align: center
         .title
-          display: inline-block
           color: rgba(0,0,0,.45)
           font-size: 18px
           margin-bottom: 10px
         .content
+          display: block;
           font-size: 15px
           color: #41B883
           font-weight: 600
-      .ip
-        display: inline-block
-        width: 25%
-        text-align: center
-      .count
-        width: 25%
-        display: inline-block
-        text-align: center
+      // .ip
+      //   display: inline-block
+      //   width: 25%
+      //   text-align: center
+      // .count
+      //   width: 25%
+      //   display: inline-block
+      //   text-align: center
 </style>
 
