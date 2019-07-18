@@ -4,7 +4,13 @@
       <div class="search">
         书名：
         <el-input placeholder="请输入书名"  style="width: 300px;" v-model="serachName"></el-input>
-        <el-button type="primary" style="margin-left: 15px;" icon="el-icon-search">查询</el-button>
+        <el-button
+          type="primary"
+          style="margin-left: 15px;"
+          @click="search"
+          icon="el-icon-search">
+          查询
+        </el-button>
       </div>
       <div class="operation">
         <el-button icon="el-icon-refresh" circle :loading="loading" @click="refresh"></el-button>
@@ -35,6 +41,7 @@
 
 <script>
 import { getBooks } from '@/api/book';
+import { query } from '@/api/api';
 import bookTable from './book-table';
 
 export default {
@@ -51,6 +58,7 @@ export default {
       total: 0,
       loading: false,
       serachName: '',
+      serachStatus: false, // 分页器根据该值判断是原tab分页还是搜索的结果分页
       bookTabs: [
         { label: '所有图书', value: 'all', icon: 'daishenhe' },
         { label: '可借图书', value: 'available', icon: 'jieshu' },
@@ -74,13 +82,38 @@ export default {
       return books;
     },
     async handlePaginationClick() {
+      if (this.serachStatus) {
+        await this.commonSearchApi(
+          (this.currentPage - 1) * this.limit,
+          this.limit);
+        return;
+      }
       this.books = await this.getSomeBooks(
         this.activeTab,
         (this.currentPage - 1) * this.limit,
         this.limit);
     },
     async handleClick() {
+      this.serachStatus = false;
+      this.currentPage = 1;
       this.books = await this.getSomeBooks(this.activeTab, 0, this.limit);
+    },
+    async commonSearchApi(start, limit) {
+      this.loading = true;
+      this.activeTab = 'all';
+      this.serachStatus = true;
+      const result = await query({
+        type: 'search_book',
+        value: this.serachName,
+        start,
+        limit
+      });
+      this.books = result.data;
+      this.total = result.total;
+      this.loading = false;
+    },
+    async search() {
+      await this.commonSearchApi(this.start, this.limit);
     }
   }
 };

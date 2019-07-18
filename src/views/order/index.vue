@@ -1,6 +1,11 @@
 <template>
   <div class="order">
-    <search :loading="loading" @refresh="refresh"></search>
+    <search
+      :loading="loading"
+      @refresh="refresh"
+      @clickbtn="search"
+      v-bind.sync="searchValue">
+    </search>
     <el-tabs
       v-model="activeTab"
       @tab-click="handleClick"
@@ -16,7 +21,7 @@
         </order-table>
       </el-tab-pane>
     </el-tabs>
-    <div class="page-wrapper">
+    <div class="page-wrapper" v-if="!serachStatus">
       <el-pagination
         :current-page.sync="currentPage"
         :page-size="limit"
@@ -31,6 +36,7 @@
 
 <script>
 import { getOrders } from '@/api/order';
+import { query } from '@/api/api';
 import search from './search';
 import orderTable from './order-table';
 
@@ -48,12 +54,19 @@ export default {
         { label: '待审核', value: 'checkingOrders', icon: 'daishenhe' },
         { label: '借书中', value: 'borrowingOrders', icon: 'jieshu' },
         { label: '已还书', value: 'returnedOrders', icon: 'huanshuzhong' },
-        { label: '已过期', value: 'expiredOrders', icon: 'guoqi1' }
+        { label: '已过期', value: 'expiredOrders', icon: 'guoqi1' },
+        { label: '全部', value: 'allOrders', icon: 'tushu' }
       ],
       start: 0,
       limit: 10,
       currentPage: 1,
-      total: 0
+      total: 0,
+      // bookname: ''
+      searchValue: {
+        bookname: '',
+        username: ''
+      },
+      serachStatus: false
     };
   },
   async mounted() {
@@ -68,15 +81,37 @@ export default {
       return result.orders;
     },
     async refresh() {
+      this.serachStatus = false;
       this.orders = await this.getSomeOrders(this.activeTab, this.start, this.limit);
     },
     async handleClick() {
+      this.serachStatus = false;
+      this.currentPage = 1;
       this.orders = await this.getSomeOrders(this.activeTab, 0, this.limit);
     },
     async handlePaginationClick() {
       this.orders = await this.getSomeOrders(this.activeTab,
         (this.currentPage - 1) * this.limit,
         this.limit);
+    },
+    async commonSearchApi(start, limit) {
+      this.loading = true;
+      this.activeTab = 'allOrders';
+      this.serachStatus = true;
+      const result = await query({
+        type: 'search_order',
+        value: {
+          search_user: this.searchValue.username,
+          search_book: this.searchValue.bookname
+        },
+        start,
+        limit
+      });
+      this.orders = result.data;
+      this.loading = false;
+    },
+    async search() {
+      await this.commonSearchApi(this.start, this.limit);
     }
   }
 };

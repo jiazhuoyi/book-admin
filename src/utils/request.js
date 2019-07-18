@@ -12,7 +12,7 @@ const url = process.env.NODE_ENV === 'production' ? `${process.env.API_HOST}/api
 
 const request = axios.create({
   baseURL: url,
-  timeout: 1000
+  timeout: 10000
 });
 
 request.interceptors.request.use((config) => {

@@ -4,7 +4,13 @@
       <div class="search">
         用户名：
         <el-input placeholder="请输入用户名"  style="width: 300px;" v-model="serachName"></el-input>
-        <el-button type="primary" style="margin-left: 15px;" icon="el-icon-search">查询</el-button>
+        <el-button
+          type="primary"
+          style="margin-left: 15px;"
+          icon="el-icon-search"
+          @click="search">
+          查询
+        </el-button>
       </div>
       <div class="operation">
         <el-button icon="el-icon-refresh" :loading="loading" circle @click="refresh"></el-button>
@@ -76,6 +82,7 @@
 
 <script>
 import { getUsers } from '@/api/user';
+import { query } from '@/api/api';
 import userTable from './user-table';
 
 export default {
@@ -98,6 +105,7 @@ export default {
       total: 0,
       currentPage: 1,
       serachName: '',
+      serachStatus: false,
       loading: false,
       showDialog: false,
       userForm: {},
@@ -111,6 +119,23 @@ export default {
     addSystemUser() {
       this.showDialog = true;
     },
+    async search() {
+      await this.commonSearchApi(this.start, this.limit);
+    },
+    async commonSearchApi(start, limit) {
+      this.loading = true;
+      this.activeTab = 'allUsers';
+      this.serachStatus = true;
+      const result = await query({
+        type: 'search_user',
+        value: this.serachName,
+        start,
+        limit
+      });
+      this.users = result.data;
+      this.total = result.total;
+      this.loading = false;
+    },
     async getSomeUsers(type, start, limit) {
       this.loading = true;
       const result = await getUsers(this.activeTab, start, limit);
@@ -119,12 +144,20 @@ export default {
       return result.users;
     },
     async handleClick() {
+      this.serachStatus = false;
+      this.currentPage = 1;
       this.users = await this.getSomeUsers(this.activeTab, 0, this.limit);
     },
     async refresh() {
       this.users = await this.getSomeUsers(this.activeTab, 0, this.limit);
     },
     async handlePaginationClick() {
+      if (this.serachStatus) {
+        await this.commonSearchApi(
+          (this.currentPage - 1) * this.limit,
+          this.limit);
+        return;
+      }
       this.users = await this.getSomeUsers(
         this.activeTab,
         (this.currentPage - 1) * this.limit,

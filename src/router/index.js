@@ -4,6 +4,7 @@ import Dashboard from '@/views/dashboard/dashboard';
 import Login from '@/views/login';
 import Main from '@/views/main';
 import Notice from '@/views/notice/notice';
+// import My from '@/views/my/index';
 
 Vue.use(Router);
 
@@ -107,6 +108,23 @@ const router = new Router({
             requireAuth: true
           },
           component: () => import('@/views/user/index')
+        }
+      ]
+    },
+    {
+      path: '/my',
+      meta: {
+        requireAuth: true
+      },
+      component: Main,
+      children: [
+        {
+          path: '',
+          name: 'My',
+          meta: {
+            requireAuth: true
+          },
+          component: () => import('@/views/my/index')
         }
       ]
     },

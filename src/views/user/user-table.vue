@@ -12,10 +12,10 @@
       <el-table-column prop="emid" label="员工编号"></el-table-column>
       <el-table-column label="状态" width="150">
         <template slot-scope="scope">
-          <el-tag v-show="scope.row.status == 0" type="warning" effect="dark">未绑定</el-tag>
-          <el-tag v-show="scope.row.status == 1" effect="dark">待审核</el-tag>
-          <el-tag v-show="scope.row.status == 2" type="success" effect="dark">有效</el-tag>
-          <el-tag v-show="scope.row.status == 6" type="danger" effect="dark">被驳回</el-tag>
+          <el-tag v-if="scope.row.status == 0" type="warning" effect="dark">未绑定</el-tag>
+          <el-tag v-if="scope.row.status == 1" effect="dark">待审核</el-tag>
+          <el-tag v-if="scope.row.status == 2" type="success" effect="dark">有效</el-tag>
+          <el-tag v-if="scope.row.status == 6" type="danger" effect="dark">被驳回</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="角色" width="150">

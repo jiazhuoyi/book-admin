@@ -44,10 +44,13 @@
           <span>{{order_date_msg}}</span>
         </template>
         <template slot-scope="scope">
-          <span>{{ scope.row.create_date | order_date(scope.row.status) }}</span>
+          <span>{{ scope.row.update_date | order_date(scope.row.status) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column
+        label="操作"
+        width="200"
+        v-if="status === 'checkingOrders'">
         <template slot-scope="scope">
           <el-button type="success"
             size="mini"
