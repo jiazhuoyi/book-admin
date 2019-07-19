@@ -14,3 +14,10 @@ export function getSystemConfig() {
     method: 'get'
   });
 }
+
+export function getDashboard() {
+  return request({
+    url: '/manage/dashboard',
+    method: 'get'
+  });
+}

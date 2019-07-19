@@ -16,13 +16,13 @@
           <div class="ip test">
             <p class="title">待处理订单</p>
             <router-link class="content" to="/order">
-              <countTo :startVal='0' :endVal='20'></countTo>条
+              <countTo :startVal='0' :endVal='order'></countTo>条
             </router-link>
           </div>
           <div class="count test">
             <p class="title">待处理用户</p>
             <router-link class="content" to="/user">
-              <countTo :startVal='0' :endVal='10'></countTo>
+              <countTo :startVal='0' :endVal='user'></countTo>位
             </router-link>
           </div>
         </div>
@@ -39,7 +39,8 @@ export default {
   components: {
     Thumb,
     countTo
-  }
+  },
+  props: ['order', 'user']
 };
 </script>
 

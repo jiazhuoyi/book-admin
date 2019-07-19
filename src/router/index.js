@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Dashboard from '@/views/dashboard/dashboard';
 import Login from '@/views/login';
 import Main from '@/views/main';
-import Notice from '@/views/notice/notice';
+// import Notice from '@/views/notice/notice';
 // import My from '@/views/my/index';
 
 Vue.use(Router);
@@ -147,25 +147,25 @@ const router = new Router({
         }
       ]
     },
-    {
-      path: '/notice',
-      meta: {
-        requireAuth: true,
-        icon: 'icon-xiaoxi',
-        title: '消息'
-      },
-      component: Main,
-      children: [
-        {
-          path: '',
-          name: 'Notice',
-          meta: {
-            requireAuth: true
-          },
-          component: Notice
-        }
-      ]
-    },
+    // {
+    //   path: '/notice',
+    //   meta: {
+    //     requireAuth: true,
+    //     icon: 'icon-xiaoxi',
+    //     title: '消息'
+    //   },
+    //   component: Main,
+    //   children: [
+    //     {
+    //       path: '',
+    //       name: 'Notice',
+    //       meta: {
+    //         requireAuth: true
+    //       },
+    //       component: Notice
+    //     }
+    //   ]
+    // },
     {
       path: '/other',
       meta: {

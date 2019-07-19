@@ -5,7 +5,7 @@
       <span>印象晓书馆后台</span>
     </router-link>
     <div class="right-menu">
-      <router-link to="/notice">
+      <!-- <router-link to="/notice">
         <el-tooltip effect="dark"
           :content="`您有${$store.state.notice.totalCount}条未读消息`"
           placement="bottom">
@@ -13,12 +13,11 @@
             <badge :max="noticeMax"
               :value="$store.state.notice.totalCount"
               :is-hidden="$store.state.notice.totalCount == 0">
-              <!-- <img class="avatar" src="../../static/icons/notice.svg"> -->
               <i class="iconfont avatar icon-xiaoxi"></i>
             </badge>
           </div>
         </el-tooltip>
-      </router-link>
+      </router-link> -->
       <el-dropdown trigger="click" @command="handleCommand">
         <div class="my">
           <avatar :url="$store.state.user.avatar" width="40" height="40"></avatar>

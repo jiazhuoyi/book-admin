@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <head-info></head-info>
+    <head-info :user="userTotal" :order="orderTotal"></head-info>
     <div class="analyzer-wrapper">
       <el-row :gutter="10">
         <el-col :span="12">
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { getDashboard } from '@/api/api';
 import HeadInfo from '@/views/dashboard/head-info';
 import UserAnalyzer from '@/views/dashboard/user-analyzer';
 import MethodsAnalyzer from '@/views/dashboard/methods-analyzer';
@@ -24,6 +25,17 @@ export default {
     HeadInfo,
     UserAnalyzer,
     MethodsAnalyzer
+  },
+  data() {
+    return {
+      orderTotal: 0,
+      userTotal: 0
+    };
+  },
+  async mounted() {
+    const result = await getDashboard();
+    this.orderTotal = result.orderTotal;
+    this.userTotal = result.userTotal;
   }
 };
 </script>
