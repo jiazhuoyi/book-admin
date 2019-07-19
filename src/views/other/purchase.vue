@@ -1,13 +1,15 @@
 <template>
-  <div class="suggestion">
+  <div class="purchase">
     <el-tabs v-model="activeTab" @tab-click="handleClick" type="border-card">
-      <el-tab-pane v-for="tab in suggestionTbs" :key="tab.value" :name="tab.value">
+      <el-tab-pane v-for="tab in purchaseTabs" :key="tab.value" :name="tab.value">
         <span slot="label">
           <i :class="`iconfont icon-${tab.icon}`"></i>{{tab.label}}
         </span>
-        <el-table :data="suggestions" v-if="tab.value === activeTab" v-loading="loading">
+        <el-table :data="purchases" v-if="tab.value === activeTab" v-loading="loading">
           <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
-          <el-table-column prop="content" label="投诉内容"></el-table-column>
+          <el-table-column prop="title" label="书名"></el-table-column>
+          <el-table-column prop="author" label="作者"></el-table-column>
+          <el-table-column prop="isbn" label="ISBN"></el-table-column>
           <el-table-column label="状态" width="150" align="center">
             <template slot-scope="scope">
               <el-tag v-if="scope.row.status === 1" type="info">已处理</el-tag>
@@ -46,17 +48,17 @@
 </template>
 
 <script>
-import { getSuggestions, updateSuggestion } from '@/api/suggestion';
+import { getpurchases, updatepurchase } from '@/api/purchase';
 
 export default {
   data() {
     return {
-      suggestionTbs: [
-        { label: '待处理', value: 'dealingSuggestions', icon: 'daishenhe' },
-        { label: '所有', value: 'allSuggestions', icon: 'dingdan' }
+      purchaseTabs: [
+        { label: '待处理', value: 'dealingPurchases', icon: 'daishenhe' },
+        { label: '所有', value: 'allPurchases', icon: 'dingdan' }
       ],
-      activeTab: 'dealingSuggestions',
-      suggestions: [],
+      activeTab: 'dealingPurchases',
+      purchases: [],
       currentPage: 1,
       start: 0,
       limit: 10,
@@ -65,38 +67,38 @@ export default {
     };
   },
   async mounted() {
-    this.suggestions = await this.getSomeSuggestions(this.activeTab, this.start, this.limit);
+    this.purchases = await this.getSomepurchases(this.activeTab, this.start, this.limit);
   },
   methods: {
     async update(id) {
-      await updateSuggestion({ id, type: 'suggestion_pass' });
+      await updatepurchase({ id, type: 'purchase_pass' });
       await this.refresh();
     },
     async refresh() {
-      this.suggestions = await this.getSomeSuggestions(this.activeTab, this.start, this.limit);
+      this.purchases = await this.getSomepurchases(this.activeTab, this.start, this.limit);
     },
     async handleClick() {
-      this.suggestions = await this.getSomeSuggestions(this.activeTab, this.start, this.limit);
+      this.purchases = await this.getSomepurchases(this.activeTab, this.start, this.limit);
     },
     async handlePaginationClick() {
-      this.suggestions = await this.getSomeSuggestions(
+      this.purchases = await this.getSomepurchases(
         this.activeTab,
         (this.currentPage - 1) * this.limit,
         this.limit);
     },
-    async getSomeSuggestions(type, start, limit) {
+    async getSomepurchases(type, start, limit) {
       this.loading = true;
-      const result = await getSuggestions(type, start, limit);
+      const result = await getpurchases(type, start, limit);
       this.total = result.total;
       this.loading = false;
-      return result.suggestions;
+      return result.purchases;
     }
   }
 };
 </script>
 
 <style lang="stylus" scoped>
-.suggestion
+.purchase
   text-align: left
   .page-wrapper
     padding: 15px 0

@@ -176,13 +176,13 @@ const router = new Router({
       component: Main,
       children: [
         {
-          path: 'apply',
-          name: 'Apply',
+          path: 'purchase',
+          name: 'Purchase',
           meta: {
             title: '购书申请',
             requireAuth: true
           },
-          component: () => import('@/views/other/apply')
+          component: () => import('@/views/other/purchase')
         },
         {
           path: 'suggestion',

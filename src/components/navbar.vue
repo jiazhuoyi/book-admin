@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getNoticeCount } from '@/api/notice';
+// import { getNoticeCount } from '@/api/notice';
 import Badge from '@/components/badge';
 import Avatar from '@/components/avatar';
 
@@ -55,10 +55,10 @@ export default {
       isHidden: true
     };
   },
-  async mounted() {
-    const result = await getNoticeCount();
-    this.$store.commit('setTotalCount', result.totalCount);
-  },
+  // async mounted() {
+  //   const result = await getNoticeCount();
+  //   this.$store.commit('setTotalCount', result.totalCount);
+  // },
   methods: {
     handleCommand(command) {
       if (command === 'logout') {
