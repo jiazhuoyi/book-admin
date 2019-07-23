@@ -17,13 +17,27 @@
         <router-link to="/book/add">
           <el-button type="success">图书入库</el-button>
         </router-link>
-        <el-button disabled>导出Excel</el-button>
+        <el-button @click="onExport">导出Excel</el-button>
+        <!-- <el-dropdown trigger="click">
+          <el-button @click="onExport">导出Excel</el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>
+              导出({{currentLabel}})第{{currentPage}}页数据
+            </el-dropdown-item>
+            <el-dropdown-item>导出({{currentLabel}})所有页数据</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown> -->
       </div>
     </div>
     <el-tabs v-model="activeTab" @tab-click="handleClick" type="border-card" v-loading="loading">
       <el-tab-pane v-for="tab in bookTabs" :key="tab.value" :name="tab.value">
         <span slot="label"><i :class="`iconfont icon-${tab.icon}`"></i> {{tab.label}}</span>
-        <book-table @refresh="refresh" v-if="activeTab === tab.value" :books="books"></book-table>
+        <book-table
+          :id="tab.value"
+          @refresh="refresh"
+          v-if="activeTab === tab.value"
+          :books="books">
+        </book-table>
       </el-tab-pane>
     </el-tabs>
     <div class="page-wrapper">
@@ -40,8 +54,12 @@
 </template>
 
 <script>
+import xlsx from 'xlsx';
+import fileSaver from 'file-saver';
 import { getBooks } from '@/api/book';
 import { query } from '@/api/api';
+import formatter from '@/utils/formatterTable';
+import excel from '@/utils/excel';
 import bookTable from './book-table';
 
 export default {
@@ -69,7 +87,22 @@ export default {
   async mounted() {
     this.books = await this.getSomeBooks(this.activeTab, 0, this.limit);
   },
+  computed: {
+    currentLabel() {
+      return (this.bookTabs.find(tab => tab.value === this.activeTab)).label;
+    }
+  },
   methods: {
+    onExport() {
+      // 根据el-table生成excel
+      // const node = document.getElementById(this.activeTab);
+      // const tableNode = node.getElementsByClassName('el-table');
+      // const wb = xlsx.utils.table_to_book(tableNode[0]);
+      // const wbout = xlsx.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' });
+      // fileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '图书.xlsx');
+      const data = formatter.bookConvertTableData(this.books);
+      excel.exportExcel(data, '图书', `${this.currentLabel}第${this.currentPage}页.xlsx`);
+    },
     async refresh() {
       this.books = await this.getSomeBooks(this.activeTab, 0, this.limit);
     },
