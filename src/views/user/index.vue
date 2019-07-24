@@ -15,7 +15,7 @@
       <div class="operation">
         <el-button icon="el-icon-refresh" :loading="loading" circle @click="refresh"></el-button>
         <el-button type="success" @click="addSystemUser">新增用户</el-button>
-        <el-button disabled>导出Excel</el-button>
+        <el-button @click="onExport">导出Excel</el-button>
       </div>
     </div>
     <el-tabs v-model="activeTab" @tab-click="handleClick" type="border-card" v-loading="loading">
@@ -71,7 +71,7 @@
           </el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer" class="dialog-footer" v-if="!serachStatus">
         <el-button type="primary" @click="showDialog = false">确 定</el-button>
         <el-button @click="showDialog = false">取 消</el-button>
       </span>
@@ -83,6 +83,8 @@
 <script>
 import { getUsers } from '@/api/user';
 import { query } from '@/api/api';
+import formatter from '@/utils/formatterTable';
+import excel from '@/utils/excel';
 import userTable from './user-table';
 
 export default {
@@ -115,7 +117,18 @@ export default {
   async mounted() {
     this.users = await this.getSomeUsers(this.activeTab, 0, this.limit);
   },
+  computed: {
+    currentLabel() {
+      return (this.userTabs.find(tab => tab.value === this.activeTab)).label;
+    }
+  },
   methods: {
+    onExport() {
+      const data = formatter.userConvertTableData(this.users);
+      excel.exportExcel(data,
+        ['微信昵称', '姓名', '员工编号', '状态', '角色', '申请时间'],
+        '用户', `${this.currentLabel}第${this.currentPage}页.xlsx`);
+    },
     addSystemUser() {
       this.showDialog = true;
     },

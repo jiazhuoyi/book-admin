@@ -15,7 +15,7 @@
     </div>
     <div class="operation">
       <el-button icon="el-icon-refresh" circle :loading="loading" @click="refresh"></el-button>
-      <el-button disabled>导出Excel</el-button>
+      <el-button @click="onexport">导出Excel</el-button>
     </div>
   </div>
 </template>
@@ -52,6 +52,9 @@ export default {
     },
     search() {
       this.$emit('clickbtn');
+    },
+    onexport() {
+      this.$emit('onexport');
     }
   }
 };

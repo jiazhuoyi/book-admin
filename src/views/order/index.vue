@@ -4,6 +4,7 @@
       :loading="loading"
       @refresh="refresh"
       @clickbtn="search"
+      @onexport="onExport"
       v-bind.sync="searchValue">
     </search>
     <el-tabs
@@ -37,6 +38,8 @@
 <script>
 import { getOrders } from '@/api/order';
 import { query } from '@/api/api';
+import formatter from '@/utils/formatterTable';
+import excel from '@/utils/excel';
 import search from './search';
 import orderTable from './order-table';
 
@@ -72,7 +75,18 @@ export default {
   async mounted() {
     this.orders = await this.getSomeOrders(this.activeTab, this.start, this.limit);
   },
+  computed: {
+    currentLabel() {
+      return (this.orderTabs.find(tab => tab.value === this.activeTab)).label;
+    }
+  },
   methods: {
+    onExport() {
+      const data = formatter.orderConvertTableData(this.orders);
+      excel.exportExcel(data,
+        ['书名', 'ISBN', '借书人姓名', '员工编号', '状态', '时间'],
+        '订单', `${this.currentLabel}订单第${this.currentPage}页.xlsx`);
+    },
     async getSomeOrders(type, start, limit) {
       this.loading = true;
       const result = await getOrders(type, start, limit);

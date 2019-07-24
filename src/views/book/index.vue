@@ -40,7 +40,7 @@
         </book-table>
       </el-tab-pane>
     </el-tabs>
-    <div class="page-wrapper">
+    <div class="page-wrapper" v-if="!serachStatus">
       <el-pagination
         :page-size="limit"
         :current-page.sync="currentPage"
@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import xlsx from 'xlsx';
-import fileSaver from 'file-saver';
+// import xlsx from 'xlsx';
+// import fileSaver from 'file-saver';
 import { getBooks } from '@/api/book';
 import { query } from '@/api/api';
 import formatter from '@/utils/formatterTable';
@@ -101,7 +101,9 @@ export default {
       // const wbout = xlsx.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' });
       // fileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '图书.xlsx');
       const data = formatter.bookConvertTableData(this.books);
-      excel.exportExcel(data, '图书', `${this.currentLabel}第${this.currentPage}页.xlsx`);
+      excel.exportExcel(data,
+        ['书名', '作者', '出版社', 'ISBN', '库存', '入库时间'],
+        '图书', `${this.currentLabel}第${this.currentPage}页.xlsx`);
     },
     async refresh() {
       this.books = await this.getSomeBooks(this.activeTab, 0, this.limit);

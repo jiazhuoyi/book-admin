@@ -23,10 +23,10 @@
       <el-table-column prop="isbn13" label="ISBN"></el-table-column>
       <el-table-column label="状态" width="150">
         <template slot-scope="scope">
-          <!-- <el-tag v-if="scope.row.status > 0" type="success" effect="dark">
+          <el-tag v-if="scope.row.status > 0" type="success" effect="dark">
             还剩{{scope.row.status}}本
           </el-tag>
-          <el-tag v-else type="danger" effect="dark">告罄</el-tag> -->
+          <el-tag v-else type="danger" effect="dark">告罄</el-tag>
           <!-- <el-tag
             :type="(scope.row.status | order_status).color">
             {{(scope.row.status | order_status).label}}
