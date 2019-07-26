@@ -26,10 +26,16 @@
           <el-form-item>
             <el-button
               type="primary"
-              style="width:50%;"
+              size="small"
+              style="margin-right: 15px"
               @click="submitPassForm('passwordForm')">
-              保存
+              保 存
             </el-button>
+            <router-link to="/my/info">
+              <el-button size="small">
+                取 消
+              </el-button>
+            </router-link>
           </el-form-item>
         </el-form>
     </el-card>

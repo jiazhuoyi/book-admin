@@ -13,7 +13,7 @@ export default {
   },
   computed: {
     src() {
-      return `https://cdn.jiazhuoyi.cn/${this.url}`;
+      return this.url ? `https://cdn.jiazhuoyi.cn/${this.url}` : '';
     }
   }
 };

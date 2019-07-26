@@ -2,7 +2,7 @@ import request from '@/utils/request';
 
 export function updateUserInfo(data) {
   return request({
-    url: '/user-info',
+    url: '/manage/user-info',
     method: 'put',
     data
   });
@@ -10,7 +10,7 @@ export function updateUserInfo(data) {
 
 export function getUserInfo() {
   return request({
-    url: '/user-info',
+    url: '/manage/user-info',
     method: 'get'
   });
 }
@@ -24,7 +24,7 @@ export function getLoginlogs() {
 
 export function updatePassword(data) {
   return request({
-    url: '/password',
+    url: '/manage/password',
     method: 'put',
     data
   });

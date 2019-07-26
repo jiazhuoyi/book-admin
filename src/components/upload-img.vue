@@ -48,7 +48,7 @@ export default {
   async created() {
     try {
       const result = await getQiniuToken();
-      this.postData.token = result.token;
+      this.postData.token = result.qiniu_token;
     } catch (error) {
       this.$message({
         message: error.msg,

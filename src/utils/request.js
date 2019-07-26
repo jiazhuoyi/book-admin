@@ -35,12 +35,16 @@ request.interceptors.response.use((response) => {
   return Promise.resolve(response.data);
 }, (error) => {
   console.log('发生错误:', error.response);
+  const data = error.response && error.response.data;
   switch (error.response.status) {
     case 404:
-      Vue.prototype.$message.error('接口错误');
+      Vue.prototype.$message.error('接口不存在');
       break;
     case 401:
       router.push({ path: '/login', query: { redirect: window.location.pathname } });
+      break;
+    case 403:
+      Vue.prototype.$message.error(`code:${data.code}  ${data.message}`);
       break;
     default:
       break;

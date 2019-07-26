@@ -4,22 +4,21 @@ const user = {
   state: {
     account: '',
     name: '',
-    status: '',
-    token: '',
-    roles: [],
+    role: '',
     avatar: ''
   },
   mutations: {
     setUser: (state, userInfo) => {
       state.name = userInfo.name;
+      state.role = userInfo.role;
       state.account = userInfo.account;
-      state.token = userInfo.token;
       state.avatar = userInfo.avatar;
     },
     deleteUser: (state) => {
       state.account = '';
       state.name = '';
-      state.roles = [];
+      state.roles = '';
+      state.avatar = '';
       localStorage.removeItem('token');
     }
   },
@@ -38,10 +37,10 @@ const user = {
     getUserInfo(context) {
       return new Promise((resolve, reject) => {
         request({
-          url: '/user-info',
+          url: '/manage/user-info',
           method: 'get'
         }).then((result) => {
-          context.commit('setUser', result.userInfo);
+          context.commit('setUser', result.user);
           resolve(result);
         }).catch((error) => {
           reject(error);

@@ -3,8 +3,6 @@ import Router from 'vue-router';
 import Dashboard from '@/views/dashboard/dashboard';
 import Login from '@/views/login';
 import Main from '@/views/main';
-// import Notice from '@/views/notice/notice';
-// import My from '@/views/my/index';
 
 Vue.use(Router);
 
@@ -192,6 +190,38 @@ const router = new Router({
             requireAuth: true
           },
           component: () => import('@/views/other/suggestion')
+        }
+      ]
+    },
+    {
+      path: '/my',
+      name: 'My',
+      meta: {
+        requireAuth: true
+      },
+      component: Main,
+      children: [
+        {
+          path: 'info',
+          name: 'Info',
+          meta: {
+            requireAuth: true
+          },
+          component: () => import('@/views/my/info')
+        }, {
+          path: 'update-password',
+          name: 'UpdatePassword',
+          meta: {
+            requireAuth: true
+          },
+          component: () => import('@/views/my/update-password')
+        }, {
+          path: 'update-info',
+          name: 'UpdateInfo',
+          meta: {
+            requireAuth: true
+          },
+          component: () => import('@/views/my/update-info')
         }
       ]
     },

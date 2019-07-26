@@ -25,6 +25,12 @@
           <i class="el-icon-arrow-down el-icon--right"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="my">
+            <div class="dropdown-item">
+              <img class="my-icon" src="../../static/icons/profile.svg">
+              <span>我的</span>
+            </div>
+          </el-dropdown-item>
           <el-dropdown-item command="logout" divided>
             <div class="dropdown-item">
               <img class="my-icon" src="../../static/icons/logout.svg">

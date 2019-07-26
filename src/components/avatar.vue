@@ -7,13 +7,16 @@
 <script>
 export default {
   props: {
-    url: String,
+    url: {
+      type: String,
+      default: 'errno-404'
+    },
     width: String,
     height: String
   },
   computed: {
     src() {
-      return `https://cdn.jiazhuoyi.cn/${this.url}`;
+      return this.url ? `https://cdn.jiazhuoyi.cn/${this.url}` : '';
     }
   }
 };
