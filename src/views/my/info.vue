@@ -52,7 +52,7 @@ export default {
       if (this.user.avatar) {
         return `https://cdn.jiazhuoyi.cn/${this.user.avatar}`;
       }
-      return;
+      return '';
     }
   },
   components: {
@@ -63,7 +63,6 @@ export default {
       const result = await this.$store.dispatch('getUserInfo');
       this.user = result.user;
     } catch (error) {
-      console.dir(error);
       this.$message({
         message: error.message,
         type: 'error'

@@ -49,7 +49,8 @@ const router = new Router({
       meta: {
         requireAuth: true,
         icon: 'icon-dingdan',
-        title: '订单管理'
+        title: '订单管理',
+        bread: '订单管理'
       },
       component: Main,
       children: [
@@ -68,7 +69,8 @@ const router = new Router({
       meta: {
         requireAuth: true,
         icon: 'icon-tushu',
-        title: '图书管理'
+        title: '图书管理',
+        bread: '图书管理'
       },
       component: Main,
       children: [
@@ -84,6 +86,7 @@ const router = new Router({
           path: 'add',
           name: 'AddBook',
           meta: {
+            bread: '图书入库',
             requireAuth: true
           },
           component: () => import('@/views/book/add-book')
@@ -95,7 +98,8 @@ const router = new Router({
       meta: {
         requireAuth: true,
         icon: 'icon-yonghuzu',
-        title: '用户管理'
+        title: '用户管理',
+        bread: '用户管理'
       },
       component: Main,
       children: [
@@ -110,28 +114,12 @@ const router = new Router({
       ]
     },
     {
-      path: '/my',
-      meta: {
-        requireAuth: true
-      },
-      component: Main,
-      children: [
-        {
-          path: '',
-          name: 'My',
-          meta: {
-            requireAuth: true
-          },
-          component: () => import('@/views/my/index')
-        }
-      ]
-    },
-    {
       path: '/system',
       meta: {
         requireAuth: true,
         icon: 'icon-shezhi',
-        title: '系统设置'
+        title: '系统设置',
+        bread: '系统设置'
       },
       component: Main,
       children: [
@@ -169,7 +157,8 @@ const router = new Router({
       meta: {
         requireAuth: true,
         icon: 'icon-qita',
-        title: '其他'
+        title: '其他',
+        bread: '其他'
       },
       component: Main,
       children: [
@@ -178,6 +167,7 @@ const router = new Router({
           name: 'Purchase',
           meta: {
             title: '购书申请',
+            bread: '购书申请',
             requireAuth: true
           },
           component: () => import('@/views/other/purchase')
@@ -187,6 +177,7 @@ const router = new Router({
           name: 'Suggestion',
           meta: {
             title: '投诉建议',
+            bread: '投诉建议',
             requireAuth: true
           },
           component: () => import('@/views/other/suggestion')
@@ -205,21 +196,24 @@ const router = new Router({
           path: 'info',
           name: 'Info',
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            bread: '我的'
           },
           component: () => import('@/views/my/info')
         }, {
           path: 'update-password',
           name: 'UpdatePassword',
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            bread: '修改密码'
           },
           component: () => import('@/views/my/update-password')
         }, {
           path: 'update-info',
           name: 'UpdateInfo',
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            bread: '修改信息'
           },
           component: () => import('@/views/my/update-info')
         }

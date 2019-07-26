@@ -5,7 +5,7 @@
       <el-breadcrumb-item
         v-for="item in breadlist"
         :key="item.path">
-        {{item.meta.title}}
+        {{item.meta.bread}}
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
@@ -29,7 +29,7 @@ export default {
   methods: {
     getBreadCrumb() {
       this.breadlist = this.$route.matched
-        .filter(item => (item.path !== '/dashboard') && (item.meta.title && item.meta.breadCrumb));
+        .filter(item => (item.path !== '/dashboard') && (item.meta.bread));
     }
   }
 };

@@ -96,7 +96,7 @@ export default {
                 message: '登录成功',
                 type: 'success'
               });
-              const user = await this.$store.dispatch('getUserInfo');
+              await this.$store.dispatch('getUserInfo');
               const ref = this.$route.query.redirect;
               const jumpPage = (!ref || ref === '/login') ? '/' : ref;
               // const userInfo = user.userInfo;
