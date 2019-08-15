@@ -1,3 +1,10 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-10 23:48:38
+ * @LastEditTime: 2019-08-15 01:09:25
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="navbar">
     <router-link to="/" class="site">
@@ -68,8 +75,7 @@ export default {
   methods: {
     handleCommand(command) {
       if (command === 'logout') {
-        const account = this.$store.state.user.account;
-        this.$store.dispatch('logout', account).then(() => {
+        this.$store.dispatch('logout').then(() => {
           this.$message({
             message: '退出登录',
             type: 'success'

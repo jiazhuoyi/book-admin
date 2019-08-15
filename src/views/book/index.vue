@@ -1,3 +1,10 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-11 02:57:13
+ * @LastEditTime: 2019-08-15 03:02:31
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="book">
     <div class="header">
@@ -72,7 +79,7 @@ export default {
       currentPage: 1,
       books: [],
       start: 0,
-      limit: 8,
+      limit: 10,
       total: 0,
       loading: false,
       serachName: '',
@@ -109,6 +116,7 @@ export default {
       this.books = await this.getSomeBooks(this.activeTab, 0, this.limit);
     },
     async getSomeBooks(type, start, limit) {
+      this.books = [];
       this.loading = true;
       const result = await getBooks(type, start, limit);
       const books = result.books;

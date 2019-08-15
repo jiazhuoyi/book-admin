@@ -114,6 +114,48 @@ const router = new Router({
       ]
     },
     {
+      path: '/analyzer',
+      meta: {
+        requireAuth: true,
+        icon: 'icon-tongji1',
+        title: '数据',
+        bread: '数据'
+      },
+      component: Main,
+      children: [
+        {
+          path: 'order',
+          name: 'OrderAnalyzer',
+          meta: {
+            requireAuth: true,
+            title: '订单',
+            bread: '订单'
+          },
+          component: () => import('@/views/analyzer/order')
+        },
+        {
+          path: 'user',
+          name: 'UserAnalyzer',
+          meta: {
+            requireAuth: true,
+            title: '用户',
+            bread: '用户'
+          },
+          component: () => import('@/views/analyzer/user')
+        },
+        {
+          path: 'book',
+          name: 'BookAnalyzer',
+          meta: {
+            requireAuth: true,
+            title: '图书',
+            bread: '图书'
+          },
+          component: () => import('@/views/analyzer/book')
+        }
+      ]
+    },
+    {
       path: '/system',
       meta: {
         requireAuth: true,

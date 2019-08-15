@@ -1,3 +1,10 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-14 18:58:10
+ * @LastEditTime: 2019-08-14 19:29:21
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="book-detail">
     <el-card class="box-card">

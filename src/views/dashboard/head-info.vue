@@ -1,3 +1,10 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-10 23:48:38
+ * @LastEditTime: 2019-08-14 23:45:53
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="head-info">
     <el-card class="box-card">
@@ -7,19 +14,21 @@
             <thumb :url="$store.state.user.avatar" width="80" height="80"></thumb>
           </div>
           <div class="content">
-            <div class="welcome">中午好, {{$store.state.user.name}}</div>
-            <div class="role">管理员 | 系统权限</div>
+            <div class="welcome">你好, {{$store.state.user.name}}
+              <span class="role">({{$store.state.user.role | role}})</span>
+            </div>
+            <div class="ip">当前IP：{{$store.state.user.ip}}</div>
             <div class="last-login">上次登录时间：{{$store.state.user.last_login | date}}</div>
           </div>
         </div>
         <div class="system item">
-          <div class="ip test">
+          <div class="order test">
             <p class="title">待处理订单</p>
             <router-link class="content" to="/order">
               <countTo :startVal='0' :endVal='order'></countTo>条
             </router-link>
           </div>
-          <div class="count test">
+          <div class="user test">
             <p class="title">待处理用户</p>
             <router-link class="content" to="/user">
               <countTo :startVal='0' :endVal='user'></countTo>位
@@ -61,7 +70,10 @@ export default {
         .welcome
           font-size: 20px
           line-height: 30px
-        .role
+          .role
+            font-size: 14px
+            color: rgba(0,0,0,.45)
+        .ip
           color: rgba(0,0,0,.45)
           line-height: 25px
         .last-login
@@ -82,13 +94,5 @@ export default {
           font-size: 15px
           color: #41B883
           font-weight: 600
-      // .ip
-      //   display: inline-block
-      //   width: 25%
-      //   text-align: center
-      // .count
-      //   width: 25%
-      //   display: inline-block
-      //   text-align: center
 </style>
 

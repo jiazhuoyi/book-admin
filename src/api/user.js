@@ -1,8 +1,15 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-10 23:48:38
+ * @LastEditTime: 2019-08-14 02:44:33
+ * @LastEditors: Please set LastEditors
+ */
 import request from '@/utils/request';
 
 export function updateUserInfo(data) {
   return request({
-    url: '/manage/user-info',
+    url: '/user-info',
     method: 'put',
     data
   });
@@ -10,7 +17,7 @@ export function updateUserInfo(data) {
 
 export function getUserInfo() {
   return request({
-    url: '/manage/user-info',
+    url: '/user-info',
     method: 'get'
   });
 }
@@ -24,7 +31,7 @@ export function getLoginlogs() {
 
 export function updatePassword(data) {
   return request({
-    url: '/manage/password',
+    url: '/password',
     method: 'put',
     data
   });
@@ -47,7 +54,7 @@ export function signup(data) {
 
 export function getUsers(type, start, limit) {
   return request({
-    url: '/manage/users',
+    url: '/users',
     method: 'get',
     params: {
       type,
@@ -59,7 +66,7 @@ export function getUsers(type, start, limit) {
 
 export function updateUser(data) {
   return request({
-    url: '/manage/user',
+    url: '/user',
     method: 'put',
     data
   });

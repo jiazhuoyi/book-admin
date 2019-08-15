@@ -1,9 +1,15 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-12 19:19:37
+ * @LastEditTime: 2019-08-15 03:19:34
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="book-table">
-    <el-table :data="books">
+    <el-table :data="books" border>
       <el-table-column type="index" label="序号" width="50"></el-table-column>
-      <el-table-column prop="title" label="书名"></el-table-column>
-      <el-table-column label="图片" align="center">
+      <el-table-column label="图片" align="center" width="200">
         <template slot-scope="scope">
           <el-popover placement="right" trigger="hover">
             <el-image
@@ -11,17 +17,33 @@
               :src="scope.row.image">
             </el-image>
             <el-image
-              style="width: 30px; height: 40px"
+              style="width: 75px; height: 100px"
               :src="scope.row.image"
               slot="reference">
             </el-image>
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column prop="author" label="作者"></el-table-column>
-      <el-table-column prop="publisher" label="出版社"></el-table-column>
-      <el-table-column prop="isbn13" label="ISBN"></el-table-column>
-      <el-table-column label="状态" width="150">
+      <el-table-column label="信息" align="left">
+        <template slot-scope="scope">
+          <span class="title info">{{ scope.row.title }}</span>
+          <span class="info">作者：
+            <span
+              class="author"
+              v-for="(author, index) in scope.row.author"
+              :key="index">
+              {{author}}
+            </span>
+          </span>
+          <span class="info">出版社：{{ scope.row.publisher }}</span>
+          <span class="info">ISBN：{{ scope.row.isbn13 }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column width="150" align="center" prop="status" label="库存">
+      </el-table-column>
+      <el-table-column width="150" align="center" prop="borrow_count" label="借阅次数">
+      </el-table-column>
+      <el-table-column label="状态" width="150" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.status > 0" type="success" effect="dark">
             还剩{{scope.row.status}}本
@@ -33,12 +55,12 @@
           </el-tag> -->
         </template>
       </el-table-column>
-      <el-table-column label="入库时间" width="200" align="left">
+      <el-table-column label="入库时间" width="200" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.createAt | date }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="changeAmount(scope.row)">修改数量</el-button>
         </template>
@@ -100,3 +122,18 @@ export default {
 };
 </script>
 
+<style lang="stylus" scoped>
+.book-table
+  .info
+    display: block
+    font-size: 13px
+  .title
+    font-weight: 600
+    font-size: 15px
+  .author
+    color: #3377aa
+  .author:after
+    content: ' / '
+  .author:last-child:after
+    content: ''
+</style>
