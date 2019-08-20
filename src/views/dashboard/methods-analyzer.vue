@@ -1,3 +1,10 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-10 23:48:38
+ * @LastEditTime: 2019-08-16 22:35:28
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="methods-analyzer">
     <el-card class="box-card" shadow="never">
@@ -7,11 +14,9 @@
 </template>
 
 <script>
-import echarts from 'echarts';
-
 export default {
   mounted() {
-    const myChart = echarts.init(this.$refs.myEchart);
+    const myChart = this.$echarts.init(this.$refs.myEchart);
     myChart.setOption({
       title: {
         text: '图书热度排行(前五名)'

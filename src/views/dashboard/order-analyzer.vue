@@ -1,3 +1,10 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-08-04 19:55:32
+ * @LastEditTime: 2019-08-20 18:52:46
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="order-analyzer">
     <el-card class="box-card" shadow="never">
@@ -7,11 +14,9 @@
 </template>
 
 <script>
-import echarts from 'echarts';
-
 export default {
   mounted() {
-    const myChart = echarts.init(this.$refs.myEchart);
+    const myChart = this.$echarts.init(this.$refs.myEchart);
     myChart.setOption({
       title: {
         text: '订单状态'

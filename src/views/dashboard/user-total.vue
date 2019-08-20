@@ -1,3 +1,10 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-08-02 14:54:35
+ * @LastEditTime: 2019-08-16 22:35:56
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="user-total">
     <el-card class="box-card" shadow="never">
@@ -7,11 +14,9 @@
 </template>
 
 <script>
-import echarts from 'echarts';
-
 export default {
   mounted() {
-    const myChart = echarts.init(this.$refs.myEchart);
+    const myChart = this.$echarts.init(this.$refs.myEchart);
     myChart.setOption({
       title: {
         text: '用户数量统计'

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-12 19:19:37
- * @LastEditTime: 2019-08-15 03:19:34
+ * @LastEditTime: 2019-08-15 15:00:50
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -17,7 +17,7 @@
               :src="scope.row.image">
             </el-image>
             <el-image
-              style="width: 75px; height: 100px"
+              style="width: 60px; height: 80px"
               :src="scope.row.image"
               slot="reference">
             </el-image>
@@ -45,10 +45,10 @@
       </el-table-column>
       <el-table-column label="状态" width="150" align="center">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status > 0" type="success" effect="dark">
+          <el-tag v-if="scope.row.status > 0" type="success">
             还剩{{scope.row.status}}本
           </el-tag>
-          <el-tag v-else type="danger" effect="dark">告罄</el-tag>
+          <el-tag v-else type="danger">告罄</el-tag>
           <!-- <el-tag
             :type="(scope.row.status | order_status).color">
             {{(scope.row.status | order_status).label}}
@@ -62,7 +62,12 @@
       </el-table-column>
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="changeAmount(scope.row)">修改数量</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="changeAmount(scope.row)">
+            修改数量
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

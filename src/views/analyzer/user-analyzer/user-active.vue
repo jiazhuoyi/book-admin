@@ -1,3 +1,10 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-08-04 23:06:37
+ * @LastEditTime: 2019-08-20 18:52:21
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="user-analyzer">
     <el-card class="box-card" shadow="never">
@@ -7,11 +14,9 @@
 </template>
 
 <script>
-import echarts from 'echarts';
-
 export default {
   mounted() {
-    const myChart = echarts.init(this.$refs.myEchart);
+    const myChart = this.$echarts.init(this.$refs.myEchart);
     myChart.setOption({
       title: {
         text: '活跃用户排行(前五名)'

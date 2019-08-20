@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-10 23:48:38
+ * @LastEditTime: 2019-08-16 02:33:52
+ * @LastEditors: Please set LastEditors
+ */
 'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
@@ -10,15 +17,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      '/api/v1': {
-        target: 'http://127.0.0.1:3000',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api/v1': '/api/v1'
-        },
-      },
-    },
+    // proxyTable: {
+    //   '/api/v1': {
+    //     target: 'http://47.105.109.233:3001',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/api/v1': '/api/v1'
+    //     },
+    //   },
+    // },
     devtool: '#source-map',
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-11 02:57:13
- * @LastEditTime: 2019-08-15 03:02:31
+ * @LastEditTime: 2019-08-16 22:48:06
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -61,8 +61,6 @@
 </template>
 
 <script>
-// import xlsx from 'xlsx';
-// import fileSaver from 'file-saver';
 import { getBooks } from '@/api/book';
 import { query } from '@/api/api';
 import formatter from '@/utils/formatterTable';
