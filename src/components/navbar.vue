@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-10 23:48:38
- * @LastEditTime: 2019-08-15 01:09:25
+ * @LastEditTime: 2019-08-20 18:49:45
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -25,6 +25,7 @@
           </div>
         </el-tooltip>
       </router-link> -->
+      <screen-full class="right-menu-item"></screen-full>
       <el-dropdown trigger="click" @command="handleCommand">
         <div class="my">
           <avatar :url="$store.state.user.avatar" width="40" height="40"></avatar>
@@ -54,12 +55,14 @@
 // import { getNoticeCount } from '@/api/notice';
 import Badge from '@/components/badge';
 import Avatar from '@/components/avatar';
+import ScreenFull from '@/components/screen-full';
 
 export default {
   name: 'Navbar',
   components: {
     Badge,
-    Avatar
+    Avatar,
+    ScreenFull
   },
   data() {
     return {
@@ -125,16 +128,12 @@ export default {
       vertical-align: middle
   .right-menu
     float: right
-    .notice
-      display: inline-block
-      margin-right: 20px
-      cursor: pointer
-      .avatar
-        width: $navLogoWidth
-        height: $navLogoHeight
-        line-height: $navLogoHeight
-        font-size: 25px
-        vertical-align: middle
+    &-item
+      display: inline-block;
+      padding: 0 8px;
+      &:hover
+        cursor: pointer
+        background: rgba(0, 0, 0, .025)
     .my
       display: inline-block
       line-height: $nav-height
