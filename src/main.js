@@ -2,13 +2,15 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-10 23:48:38
- * @LastEditTime: 2019-08-16 22:32:26
+ * @LastEditTime: 2019-08-24 02:47:45
  * @LastEditors: Please set LastEditors
  */
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import { Message } from 'element-ui';
+import * as Sentry from '@sentry/browser';
+import * as Integrations from '@sentry/integrations';
 // import { Button, Select } from 'element-ui';
 // import ELEMENT from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
@@ -27,19 +29,17 @@ import echarts from './utils/echarts';
 
 Vue.config.productionTip = false;
 
-// Vue.use(ELEMENT);
-
-// Vue.use(Button);
-// Vue.use(Select);
 Object.keys(elementUI).forEach((name) => {
-  // console.log('name:', name);
-  // Vue.component(name, elementUI[name]);
   Vue.use(elementUI[name]);
 });
 Vue.prototype.$message = Message;
 Vue.prototype.$echarts = echarts;
 Vue.use(filters);
 
+Sentry.init({
+  dsn: 'https://0621c40636ac41da80ae187085661592@sentry.io/1540307',
+  integrations: [new Integrations.Vue({ Vue, attachProps: true })]
+});
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

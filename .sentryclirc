@@ -1,0 +1,7 @@
+[auth]
+token = "377f2164c5d611e9bbc34201c0a8d032"
+
+[defaults]
+url = https://sentry.io
+org = "192.168.0.103"
+project = test
