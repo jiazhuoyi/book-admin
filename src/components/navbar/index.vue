@@ -2,29 +2,18 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-10 23:48:38
- * @LastEditTime: 2019-09-03 18:41:39
+ * @LastEditTime: 2019-09-03 18:41:24
  * @LastEditors: Please set LastEditors
  -->
 <template>
   <div class="navbar">
-    <!-- <router-link to="/" class="site">
-      <img src="../../static/icons/logo.png" alt="" class="logo">
-      <span>印象晓书馆后台</span>
-    </router-link> -->
+    <i
+      class="el-icon-s-fold hamburger"
+      :class="{'is-active': !$store.state.sidebar.open }"
+      @click="toggleOpen">
+    </i>
+    <bread-crumb class="bread"></bread-crumb>
     <div class="right-menu">
-      <!-- <router-link to="/notice">
-        <el-tooltip effect="dark"
-          :content="`您有${$store.state.notice.totalCount}条未读消息`"
-          placement="bottom">
-          <div class="notice">
-            <badge :max="noticeMax"
-              :value="$store.state.notice.totalCount"
-              :is-hidden="$store.state.notice.totalCount == 0">
-              <i class="iconfont avatar icon-xiaoxi"></i>
-            </badge>
-          </div>
-        </el-tooltip>
-      </router-link> -->
       <screen-full class="right-menu-item"></screen-full>
       <el-dropdown trigger="click" @command="handleCommand">
         <div class="my">
@@ -35,13 +24,13 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="my">
             <div class="dropdown-item">
-              <img class="my-icon" src="../../static/icons/profile.svg">
+              <img class="my-icon" src="static/icons/profile.svg">
               <span>我的</span>
             </div>
           </el-dropdown-item>
           <el-dropdown-item command="logout" divided>
             <div class="dropdown-item">
-              <img class="my-icon" src="../../static/icons/logout.svg">
+              <img class="my-icon" src="static/icons/logout.svg">
               <span>退出</span>
             </div>
           </el-dropdown-item>
@@ -56,21 +45,28 @@
 import Badge from '@/components/badge';
 import Avatar from '@/components/avatar';
 import ScreenFull from '@/components/screen-full';
+import BreadCrumb from '@/components/bread-crumb';
 
 export default {
   name: 'Navbar',
   components: {
     Badge,
     Avatar,
-    ScreenFull
+    ScreenFull,
+    BreadCrumb
   },
   data() {
     return {
       noticeMax: 99,
       noticeCount: 12,
-      isHidden: true
+      isHidden: true,
+      siderOpen: true
     };
   },
+  // async mounted() {
+  //   const result = await getNoticeCount();
+  //   this.$store.commit('setTotalCount', result.totalCount);
+  // },
   methods: {
     handleCommand(command) {
       if (command === 'logout') {
@@ -91,6 +87,9 @@ export default {
       } else {
         this.$router.push({ path: '/dashboard' });
       }
+    },
+    toggleOpen() {
+      this.$store.commit('setSidebarOpen');
     }
   }
 };
@@ -101,20 +100,31 @@ export default {
 .navbar
   width: 100%
   box-sizing: border-box
-  // position: fixed
-  // top: 0px
   padding: 0px $nav-padding
   height: $nav-height
   line-height: $nav-height
   background-color: $navbackgroundColor
-  // z-index: 1000
   border-bottom: 1px solid #d8dce5
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.12), 0 0 3px 0 rgba(0,0,0,.04)
+  .hamburger
+    float: left
+    line-height: $nav-height
+    font-size: 18px
+    &:hover
+      cursor: pointer
+  .is-active
+    transform: rotate(180deg)
+  .bread
+    float: left
+    height: $nav-height
+    margin-left: $nav-padding
+    display: flex
+    align-items: center
   .right-menu
     float: right
     &-item
-      display: inline-block;
-      padding: 0 8px;
+      display: inline-block
+      padding: 0 8px
       &:hover
         cursor: pointer
         background: rgba(0, 0, 0, .025)
@@ -122,12 +132,6 @@ export default {
       display: inline-block
       line-height: $nav-height
       cursor: pointer
-      .avatar
-        // display: inline
-        // width: $navLogoWidth
-        // height: $navLogoHeight
-        // vertical-align: middle
-        // border-radius: 50%
       .right-item
         line-height: $navLogoHeight
         font-weight: bolder

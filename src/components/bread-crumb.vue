@@ -1,3 +1,10 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-10 23:48:38
+ * @LastEditTime: 2019-09-03 18:41:29
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="bread-crumb">
     <el-breadcrumb>
@@ -38,9 +45,5 @@ export default {
 <style lang="stylus" scoped>
 .bread-crumb >>> .is-link
   font-weight: unset
-.bread-crumb
-  border-bottom: 1px solid #e8e8e8
-  padding-bottom: 10px
-  margin-bottom: 20px
 </style>
 

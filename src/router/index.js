@@ -1,8 +1,16 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-10 23:48:38
+ * @LastEditTime: 2019-09-03 17:48:56
+ * @LastEditors: Please set LastEditors
+ */
 import Vue from 'vue';
 import Router from 'vue-router';
 import Dashboard from '@/views/dashboard/dashboard';
 import Login from '@/views/login';
-import Main from '@/views/main';
+// import Main from '@/views/main';
+import Main from '@/views/main/index';
 
 Vue.use(Router);
 
@@ -175,25 +183,6 @@ const router = new Router({
         }
       ]
     },
-    // {
-    //   path: '/notice',
-    //   meta: {
-    //     requireAuth: true,
-    //     icon: 'icon-xiaoxi',
-    //     title: '消息'
-    //   },
-    //   component: Main,
-    //   children: [
-    //     {
-    //       path: '',
-    //       name: 'Notice',
-    //       meta: {
-    //         requireAuth: true
-    //       },
-    //       component: Notice
-    //     }
-    //   ]
-    // },
     {
       path: '/other',
       meta: {

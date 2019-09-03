@@ -1,15 +1,21 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-11 01:25:56
+ * @LastEditTime: 2019-09-03 18:42:01
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
-  <div>
-    <el-menu-item :index="getLink(item.path)" v-if="hasShowingChild(item)">
-      <!-- <i :class="`el-icon-${item.meta.icon}`"></i> -->
-      <i :class="`iconfont ${item.meta.icon}`"></i>
-      <span slot="title">{{item.meta.title}}</span>
-    </el-menu-item>
-    <el-submenu :index="`${index + 1}`" v-else>
-      <template slot="title">
-        <!-- <i :class="`el-icon-${item.meta.icon}`"></i> -->
+  <fragment>
+    <template v-if="hasShowingChild(item)">
+      <el-menu-item :index="getLink(item.path)" >
         <i :class="`iconfont ${item.meta.icon}`"></i>
-        <!-- <span class="iconfont iconwode"></span> -->
+        <span slot="title">{{item.meta.title}}</span>
+      </el-menu-item>
+    </template>
+    <el-submenu :index="`${index + 1}`" v-else popper-append-to-body>
+      <template slot="title">
+        <i :class="`iconfont ${item.meta.icon}`"></i>
         <span>{{item.meta.title}}</span>
       </template>
       <el-menu-item
@@ -20,10 +26,11 @@
         {{child.meta.title}}
       </el-menu-item>
     </el-submenu>
-  </div>
+  </fragment>
 </template>
 
 <script>
+
 export default {
   name: 'SidebarItem',
   props: {

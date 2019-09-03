@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-10 23:48:38
+ * @LastEditTime: 2019-09-03 01:16:13
+ * @LastEditors: Please set LastEditors
+ */
 'use strict'
 const path = require('path')
 const utils = require('./utils')
@@ -40,7 +47,8 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': resolve('src'),
+      'static': resolve('static')
     }
   },
   module: {

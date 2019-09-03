@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-10 23:48:38
- * @LastEditTime: 2019-08-14 23:45:53
+ * @LastEditTime: 2019-09-03 17:27:22
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -23,13 +23,13 @@
         </div>
         <div class="system item">
           <div class="order test">
-            <p class="title">待处理订单</p>
+            <div class="title">待处理订单</div>
             <router-link class="content" to="/order">
               <countTo :startVal='0' :endVal='order'></countTo>条
             </router-link>
           </div>
           <div class="user test">
-            <p class="title">待处理用户</p>
+            <div class="title">待处理用户</div>
             <router-link class="content" to="/user">
               <countTo :startVal='0' :endVal='user'></countTo>位
             </router-link>
@@ -57,8 +57,10 @@ export default {
 .head-info
   .info
     display: flex
-    .item
-      flex: 1
+    justify-content: space-between
+    align-items: center
+    // .item
+    //   flex: 1
     .user
       text-align: left
       display: flex
@@ -83,9 +85,11 @@ export default {
       text-align: right
       .test
         display: inline-block
-        width: 25%
+        // width: 25%
+        margin-left: 20px
         text-align: center
         .title
+          display: block
           color: rgba(0,0,0,.45)
           font-size: 18px
           margin-bottom: 10px

@@ -2,12 +2,14 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-12 19:19:37
- * @LastEditTime: 2019-08-15 15:00:50
+ * @LastEditTime: 2019-08-27 15:24:25
  * @LastEditors: Please set LastEditors
  -->
 <template>
   <div class="book-table">
-    <el-table :data="books" border>
+    <el-table :data="books"
+      border
+      :header-cell-style="{'background-color': '#f2f2f2'}">
       <el-table-column type="index" label="序号" width="50"></el-table-column>
       <el-table-column label="图片" align="center" width="200">
         <template slot-scope="scope">

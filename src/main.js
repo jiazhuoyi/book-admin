@@ -2,12 +2,13 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-10 23:48:38
- * @LastEditTime: 2019-08-24 02:47:45
+ * @LastEditTime: 2019-09-03 17:47:07
  * @LastEditors: Please set LastEditors
  */
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
+import Fragment from 'vue-fragment';
 import { Message } from 'element-ui';
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
@@ -34,6 +35,7 @@ Object.keys(elementUI).forEach((name) => {
 });
 Vue.prototype.$message = Message;
 Vue.prototype.$echarts = echarts;
+Vue.use(Fragment.Plugin);
 Vue.use(filters);
 
 Sentry.init({
